@@ -1,9 +1,10 @@
 class Task
-  attr_reader :name, :list_id
+  attr_reader :name, :list_id, :done
 
   def initialize(attributes)
     @name = attributes['name']
     @list_id = attributes['list_id']
+    @done = attributes['done']
   end
 
   def self.all
@@ -27,6 +28,10 @@ class Task
 
   def delete(task_name)
     DB.exec("DELETE FROM tasks WHERE name = '#{task_name}';")
+  end
+
+  def completed?
+    self.done == true
   end
 
 end

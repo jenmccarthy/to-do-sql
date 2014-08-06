@@ -49,4 +49,9 @@ describe Task do
     expect(Task.all).to eq [test_task]
   end
 
+  it 'checks for completed status' do
+    test_task = Task.new({'name' => 'wash the windows', 'list_id' => 1, "done" => false})
+    expect(test_task.completed?).to eq false
+  end
+
 end
