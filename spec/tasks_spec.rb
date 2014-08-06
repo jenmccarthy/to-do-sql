@@ -40,4 +40,13 @@ describe Task do
     expect(test_task).to eq another_test_task
   end
 
+  it 'will delete a task' do
+    test_task = Task.new({'name' => 'wash the windows', 'list_id' => 1})
+    another_test_task = Task.new({'name' => 'bake a cake', 'list_id' => 1})
+    test_task.save
+    another_test_task.save
+    another_test_task.delete('bake a cake')
+    expect(Task.all).to eq [test_task]
+  end
+
 end

@@ -25,4 +25,8 @@ class Task
     self.name == test.name
   end
 
+  def delete(task_name)
+    DB.exec("DELETE FROM tasks WHERE name = '#{task_name}';")
+  end
+
 end
