@@ -52,4 +52,18 @@ describe List do
     expect(test_list.tasks).to eq [test_task]
   end
 
+  it 'will delete a list and its tasks' do
+    test_list = List.new({'name' => 'home'})
+    test_list.save
+    another_test_list = List.new({'name' => 'school'})
+    another_test_list.save
+    test_task = Task.new({'name' => 'wash the windows', 'list_id' => test_list.id})
+    test_task.save
+    another_test_task = Task.new({'name' => 'homework', 'list_id' => another_test_list.id})
+    another_test_task.save
+    test_list.delete
+    expect(List.all).to eq [another_test_list]
+    expect(Task.all).to eq [another_test_task]
+  end
+
 end
