@@ -14,12 +14,12 @@ require 'spec_helper'
 
 describe Task do
   it 'will initialize with a hash the tasks information' do
-    test_task = Task.new({'name' => 'wash the windows', 'list_id' => 1})
+    test_task = Task.new({'name' => 'wash the windows', 'list_id' => 1, 'due_date' => '2015-01-08'})
     expect(test_task).to be_an_instance_of Task
   end
 
   it 'tells you its name and list_id' do
-    test_task = Task.new({'name' => 'wash the windows', 'list_id' => 1})
+    test_task = Task.new({'name' => 'wash the windows', 'list_id' => 1, 'due_date' => '2015-01-08'})
     expect(test_task.name).to eq 'wash the windows'
     expect(test_task.list_id). to eq 1
   end
@@ -29,7 +29,7 @@ describe Task do
   end
 
   it 'will save all tasks to our class' do
-    test_task = Task.new({'name' => 'wash the windows', 'list_id' => 1})
+    test_task = Task.new({'name' => 'wash the windows', 'list_id' => 1, 'due_date' => '2015-01-08'})
     test_task.save
     expect(Task.all).to eq [test_task]
   end
@@ -41,8 +41,8 @@ describe Task do
   end
 
   it 'will delete a task' do
-    test_task = Task.new({'name' => 'wash the windows', 'list_id' => 1})
-    another_test_task = Task.new({'name' => 'bake a cake', 'list_id' => 1})
+    test_task = Task.new({'name' => 'wash the windows', 'list_id' => 1, 'due_date' => '2015-01-08'})
+    another_test_task = Task.new({'name' => 'bake a cake', 'list_id' => 1, 'due_date' => '2015-01-08'})
     test_task.save
     another_test_task.save
     another_test_task.delete('bake a cake')
@@ -50,16 +50,22 @@ describe Task do
   end
 
   it 'checks for completed status' do
-    test_task = Task.new({'name' => 'wash the windows', 'list_id' => 1, 'done' => 'f'})
+    test_task = Task.new({'name' => 'wash the windows', 'list_id' => 1, 'done' => 'f', 'due_date' => '2015-01-08'})
     test_task.save
     expect(test_task.completed?).to eq false
   end
 
   it 'updates the completed status' do
-    test_task = Task.new({'name' => 'wash the windows', 'list_id' => 1, 'done' => 'f'})
+    test_task = Task.new({'name' => 'wash the windows', 'list_id' => 1, 'done' => 'f', 'due_date' => '2015-01-08'})
     test_task.save
     test_task.finish
     expect(test_task.done).to eq 't'
+  end
+
+  it 'adds a due date for task completion' do
+    test_task = Task.new({'name' => 'wash the windows', 'list_id' => 1, 'done' => 'f', 'due_date' => '2015-01-08'})
+    test_task.save
+    expect(test_task.due_date).to eq '2015-01-08'
   end
 
 end

@@ -1,10 +1,11 @@
 class Task
-  attr_reader :name, :list_id, :done
+  attr_reader :name, :list_id, :done, :due_date
 
   def initialize(attributes)
     @name = attributes['name']
     @list_id = attributes['list_id']
     @done = attributes['done']
+    @due_date = attributes['due_date']
   end
 
   def self.all
@@ -14,13 +15,14 @@ class Task
       name = result['name']
       list_id = result['list_id'].to_i
       done = result['done']
-      tasks << Task.new({'name' => name, 'list_id' => list_id, 'done' => done})
+      due_date = result['due_date']
+      tasks << Task.new({'name' => name, 'list_id' => list_id, 'done' => done, 'due_date' => due_date})
     end
     tasks
   end
 
   def save
-    DB.exec("INSERT INTO tasks (name, list_id, done) VALUES ('#{@name}', #{@list_id}, '#{'f'}');")
+    DB.exec("INSERT INTO tasks (name, list_id, done, due_date) VALUES ('#{@name}', #{@list_id}, '#{'f'}', '#{@due_date}');")
   end
 
   def ==(test)

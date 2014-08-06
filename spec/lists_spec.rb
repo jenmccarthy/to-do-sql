@@ -45,9 +45,9 @@ describe List do
     test_list.save
     another_test_list = List.new({'name' => 'school'})
     another_test_list.save
-    test_task = Task.new({'name' => 'wash the windows', 'list_id' => test_list.id})
+    test_task = Task.new({'name' => 'wash the windows', 'list_id' => test_list.id, 'due_date' => '2015-01-08'})
     test_task.save
-    another_test_task = Task.new({'name' => 'homework', 'list_id' => another_test_list.id})
+    another_test_task = Task.new({'name' => 'homework', 'list_id' => another_test_list.id, 'due_date' => '2015-01-08'})
     another_test_task.save
     expect(test_list.tasks).to eq [test_task]
   end
@@ -57,9 +57,9 @@ describe List do
     test_list.save
     another_test_list = List.new({'name' => 'school'})
     another_test_list.save
-    test_task = Task.new({'name' => 'wash the windows', 'list_id' => test_list.id})
+    test_task = Task.new({'name' => 'wash the windows', 'list_id' => test_list.id, 'due_date' => '2015-01-08'})
     test_task.save
-    another_test_task = Task.new({'name' => 'homework', 'list_id' => another_test_list.id})
+    another_test_task = Task.new({'name' => 'homework', 'list_id' => another_test_list.id, 'due_date' => '2015-01-08'})
     another_test_task.save
     test_list.delete
     expect(List.all).to eq [another_test_list]
