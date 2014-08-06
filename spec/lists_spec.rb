@@ -40,4 +40,16 @@ describe List do
     expect(test_list).to eq another_test_list
   end
 
+  it 'will returns tasks from a particular list only' do
+    test_list = List.new({'name' => 'home'})
+    test_list.save
+    another_test_list = List.new({'name' => 'school'})
+    another_test_list.save
+    test_task = Task.new({'name' => 'wash the windows', 'list_id' => test_list.id})
+    test_task.save
+    another_test_task = Task.new({'name' => 'homework', 'list_id' => another_test_list.id})
+    another_test_task.save
+    expect(test_list.tasks).to eq [test_task]
+  end
+
 end

@@ -1,3 +1,4 @@
+require 'pry'
 class List
 
 attr_reader :name, :id
@@ -25,6 +26,17 @@ attr_reader :name, :id
 
   def ==(test)
     self.name == test.name
+  end
+
+  def tasks
+    results = DB.exec("SELECT * FROM tasks WHERE list_id = #{self.id};")
+    tasks = []
+    results.each do |result|
+      name = result['name']
+      list_id = result['list_id'].to_i
+      tasks << Task.new({'name' => name, 'list_id' => list_id})
+    end
+    tasks
   end
 
 end

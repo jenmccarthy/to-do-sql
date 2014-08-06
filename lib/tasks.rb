@@ -22,7 +22,7 @@ class Task
   end
 
   def ==(test)
-    self.name == test.name
+    self.name == test.name && self.list_id == test.list_id
   end
 
   def delete(task_name)
