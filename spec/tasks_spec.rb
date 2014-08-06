@@ -50,8 +50,16 @@ describe Task do
   end
 
   it 'checks for completed status' do
-    test_task = Task.new({'name' => 'wash the windows', 'list_id' => 1, "done" => false})
+    test_task = Task.new({'name' => 'wash the windows', 'list_id' => 1, 'done' => 'f'})
+    test_task.save
     expect(test_task.completed?).to eq false
+  end
+
+  it 'updates the completed status' do
+    test_task = Task.new({'name' => 'wash the windows', 'list_id' => 1, 'done' => 'f'})
+    test_task.save
+    test_task.finish
+    expect(test_task.done).to eq 't'
   end
 
 end

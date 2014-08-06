@@ -13,13 +13,14 @@ class Task
     results.each do |result|
       name = result['name']
       list_id = result['list_id'].to_i
-      tasks << Task.new({'name' => name, 'list_id' => list_id})
+      done = result['done']
+      tasks << Task.new({'name' => name, 'list_id' => list_id, 'done' => done})
     end
     tasks
   end
 
   def save
-    DB.exec("INSERT INTO tasks (name, list_id) VALUES ('#{@name}', #{@list_id});")
+    DB.exec("INSERT INTO tasks (name, list_id, done) VALUES ('#{@name}', #{@list_id}, '#{'f'}');")
   end
 
   def ==(test)
@@ -31,7 +32,12 @@ class Task
   end
 
   def completed?
-    self.done == true
+    self.done == 't'
+  end
+
+  def finish
+    DB.exec("UPDATE tasks SET done = 't' WHERE name = '#{self.name}';")
+    @done = 't'
   end
 
 end
