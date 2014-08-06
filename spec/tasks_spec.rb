@@ -1,14 +1,16 @@
-require 'rspec'
-require 'pg'
-require 'tasks'
+require 'spec_helper'
 
-DB = PG.connect({:dbname => 'to_do1_test'})
+# require 'rspec'
+# require 'pg'
+# require 'tasks'
 
-RSpec.configure do |config|
-  config.after(:each) do
-    DB.exec("DELETE FROM tasks *;")
-  end
-end
+# DB = PG.connect({:dbname => 'to_do1_test'})
+
+# RSpec.configure do |config|
+#   config.after(:each) do
+#     DB.exec("DELETE FROM tasks *;")
+#   end
+# end
 
 describe Task do
   it 'will initialize with a hash the tasks information' do
@@ -32,7 +34,7 @@ describe Task do
     expect(Task.all).to eq [test_task]
   end
 
-  it 'will know that the objects are the same if they have the same name' do
+  it 'will know that the objects are the same if they have the same name and ID' do
     test_task = Task.new({'name' => 'wash the windows', 'list_id' => 1})
     another_test_task = Task.new({'name' => 'wash the windows', 'list_id' => 1})
     expect(test_task).to eq another_test_task
