@@ -68,7 +68,7 @@ describe Task do
     expect(test_task.due_date).to eq '2015-01-08'
   end
 
-  it 'sorts a table by the due date' do
+  it 'sorts a table by the due date in descending order' do
     another_test_task = Task.new({'name' => 'bake a cake', 'list_id' => 1, 'done' => 'f', 'due_date' => '2015-01-15'})
     test_task = Task.new({'name' => 'wash the windows', 'list_id' => 1, 'done' => 'f', 'due_date' => '2015-01-08'})
     yet_another_test_task = Task.new({'name' => 'water the garden', 'list_id' => 1, 'done' => 'f', 'due_date' => '2015-01-15'})
@@ -76,6 +76,23 @@ describe Task do
     test_task.save
     yet_another_test_task.save
     expect(Task.sort).to eq [test_task, another_test_task, yet_another_test_task]
+  end
+
+  it 'sorts a table by the due date in descending order' do
+    another_test_task = Task.new({'name' => 'bake a cake', 'list_id' => 1, 'done' => 'f', 'due_date' => '2015-01-15'})
+    test_task = Task.new({'name' => 'wash the windows', 'list_id' => 1, 'done' => 'f', 'due_date' => '2015-01-08'})
+    yet_another_test_task = Task.new({'name' => 'water the garden', 'list_id' => 1, 'done' => 'f', 'due_date' => '2015-01-15'})
+    another_test_task.save
+    test_task.save
+    yet_another_test_task.save
+    expect(Task.sort_desc).to eq [another_test_task, yet_another_test_task, test_task]
+  end
+
+  it 'allows for tasks to be edited' do
+    test_task = Task.new({'name' => 'wash the windows', 'list_id' => 1, 'done' => 'f', 'due_date' => '2015-01-08'})
+    test_task.save
+    test_task.edit
+    expect(test_task.name).to eq 'wash the dirty windows'
   end
 
 end

@@ -34,6 +34,20 @@ class Task
     tasks
   end
 
+  def self.sort_desc
+    results = DB.exec("SELECT * FROM tasks ORDER BY due_date DESC, name;")
+    tasks = []
+    results.each do |result|
+      name = result['name']
+      list_id = result['list_id'].to_i
+      done = result['done']
+      due_date = result['due_date']
+      tasks << Task.new({'name' => name, 'list_id' => list_id, 'done' => done, 'due_date' => due_date})
+    end
+    tasks
+  end
+
+
   def save
     DB.exec("INSERT INTO tasks (name, list_id, done, due_date) VALUES ('#{@name}', #{@list_id}, '#{'f'}', '#{@due_date}');")
   end
@@ -53,6 +67,10 @@ class Task
   def finish
     DB.exec("UPDATE tasks SET done = 't' WHERE name = '#{self.name}';")
     @done = 't'
+  end
+
+  def edit
+    DB.exec("UPDATE tasks SET name = 'wash the dirty windows' WHERE name = '#{self.name}';")
   end
 
 end
